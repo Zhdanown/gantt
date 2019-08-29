@@ -5,7 +5,7 @@ $CELL_WIDTH: 40px;
   flex: 1;
   // display: flex;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 250px 1fr;
   overflow-y: overlay;
 
   .legend {
@@ -59,12 +59,12 @@ $CELL_WIDTH: 40px;
       top: 0;
       background: white;
       z-index: 1;
-      box-shadow: 0px 4px 15px -8px grey;
 
       .date {
         // flex: 1;
         &.cell {
           font-weight: bold;
+          box-shadow: 0px 4px 15px -8px grey;
         }
       }
     }
@@ -80,8 +80,11 @@ $CELL_WIDTH: 40px;
       .period {
         display: inline-flex;
         height: $CELL_HEIGHT;
-        background: rgba(100, 100, 100, 0.5);
         position: absolute;
+
+        .cell {
+          background: rgba(100, 100, 100, 0.5);
+        }
       }
     }
   }

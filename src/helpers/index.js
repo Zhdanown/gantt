@@ -4,7 +4,7 @@ export const getDateRange = function(periods) {
   periods.forEach(period => {
     dates = [...dates, ...period.dates.map(d => d.date)];
   });
-  // get inique values
+  // get unique values
   dates = [...new Set(dates)];
 
   // convert dateStrings to dates
@@ -29,8 +29,8 @@ export const getDateRange = function(periods) {
 
 export const createRange = function(min, max) {
   //--------------------------
-  min.setDate(min.getDate() - 5);
-  max.setDate(max.getDate() + 15);
+  min.setDate(min.getDate() /*- 5*/);
+  max.setDate(max.getDate() /*+ 15*/);
   //--------------------------
   let range = [];
   let start = new Date(min);
