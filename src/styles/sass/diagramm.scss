@@ -11,7 +11,8 @@ $CELL_WIDTH: 40px;
   .legend {
     min-width: 200px;
     width: 250px;
-    box-shadow: 4px 0px 15px -8px grey;
+    box-shadow: 2px 0px 2px 0 rgba(0, 0, 0, 0.14),
+      3px 0px 1px -2px rgba(0, 0, 0, 0.12), 1px 0px 5px 0 rgba(0, 0, 0, 0.2);
     position: sticky;
     left: 0;
     background-color: white;
@@ -28,7 +29,8 @@ $CELL_WIDTH: 40px;
     .legend-row {
       height: $CELL_HEIGHT;
       border-bottom: 1px solid lightgray;
-      padding-left: 10px;
+      text-align: right;
+      padding: 0 10px;
 
       // &:first-child {
       //   position: sticky;
@@ -51,6 +53,11 @@ $CELL_WIDTH: 40px;
       align-items: center;
       justify-content: center;
       font-size: 12px;
+      transition: background-color 0.4s;
+
+      &:hover {
+        background-color: rgba(180, 180, 180, 0.5);
+      }
     }
 
     .dates {
@@ -64,7 +71,8 @@ $CELL_WIDTH: 40px;
         // flex: 1;
         &.cell {
           font-weight: bold;
-          box-shadow: 0px 4px 15px -8px grey;
+          // box-shadow: 0px 4px 15px -8px grey;
+          box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.14);
         }
       }
     }
@@ -83,7 +91,13 @@ $CELL_WIDTH: 40px;
         position: absolute;
 
         .cell {
-          background: rgba(100, 100, 100, 0.5);
+          background: rgba(200, 200, 200, 0.5);
+        }
+
+        &.plan {
+          .cell {
+            background: rgba(30, 136, 229, 0.5);
+          }
         }
       }
     }

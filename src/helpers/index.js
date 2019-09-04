@@ -1,10 +1,10 @@
-export const getDateRange = function(periods) {
+export const getDateRange = function([...periods]) {
   // Get all dates
   let dates = [];
   periods.forEach(period => {
     dates = [...dates, ...period.dates.map(d => d.date)];
   });
-  // get unique values
+  // get unique valuesr
   dates = [...new Set(dates)];
 
   // convert dateStrings to dates
@@ -29,8 +29,8 @@ export const getDateRange = function(periods) {
 
 export const createRange = function(min, max) {
   //--------------------------
-  min.setDate(min.getDate() /*- 5*/);
-  max.setDate(max.getDate() /*+ 15*/);
+  min.setDate(min.getDate() /* - 5*/);
+  max.setDate(max.getDate() /* + 5*/);
   //--------------------------
   let range = [];
   let start = new Date(min);
@@ -42,6 +42,9 @@ export const createRange = function(min, max) {
 };
 
 export const stringToDate = function(dateString) {
+  if (typeof dateString !== "string") {
+    debugger;
+  }
   const [day, month, year] = dateString.split(".");
   const date = new Date("20" + year, +month - 1, day);
   return date;
@@ -53,8 +56,16 @@ export const dateToString = function(dateObj, format) {
   let date = dateObj.getDate();
 
   switch (format) {
-    case "dd.mm":
-      break;
+    case "dd.mm.yyyy":
+      date = `0${date}`.slice(-2);
+      month = `0${month}`.slice(-2);
+      return `${date}.${month}.${year}`;
+
+    case "dd.mm.yy":
+      date = `0${date}`.slice(-2);
+      month = `0${month}`.slice(-2);
+      year = `0${year}`.slice(-2);
+      return `${date}.${month}.${year}`;
 
     default:
       date = `0${date}`.slice(-2);
@@ -72,11 +83,17 @@ export const getLeftOffset = function(startDate, datesRange) {
 };
 
 export const getTopOffset = function(period, periods) {
-  let index = null;
-  periods.forEach((p, i) => {
-    if (p.id === period.id) index = i;
-  });
-  return index;
+  for (const [index, p] of periods.entries()) {
+    if (
+      p.cluster.id === period.cluster.id &&
+      p.farmId === period.farmId &&
+      p.culture.id === period.culture.id &&
+      p.agrooperation.id === period.agrooperation.id
+    ) {
+      return index;
+    }
+  }
+  return null;
 };
 
 export const sortPeriods = function(periods) {
@@ -93,4 +110,50 @@ export const sortPeriods = function(periods) {
     if (p1.culture.name < p2.culture.name) return 1;
   });
   return arr;
+};
+
+function convertPeriod(period, dateRange) {
+  return {
+    ...period,
+    dates: period.dates.map(day => ({
+      ...day,
+      date: stringToDate(day.date)
+    })),
+    dateRange
+  };
+}
+
+export const getUniqueRows = function(periods) {
+  const uniquePeriods = periods.filter(function(a) {
+    let key = a.cluster.id + a.farmId + a.culture.id + a.agrooperation.id;
+    if (!this[key]) {
+      this[key] = true;
+      return true;
+    }
+  }, {});
+  return uniquePeriods;
+};
+
+export const processPeriods = function(periods, dateRange) {
+  const convertedPeriods = periods.map(period =>
+    convertPeriod(period, dateRange)
+  );
+  const sortedPeriods = sortPeriods(convertedPeriods);
+  return sortedPeriods;
+};
+
+export const processPlans = function(plans) {
+  let copiedPlans = JSON.parse(JSON.stringify(plans));
+  let plannedPeriods = [];
+  for (let plan of copiedPlans) {
+    plan.periods = processPeriods(plan.periods);
+    plannedPeriods.push(
+      plan.periods.map(period => ({
+        ...period,
+        planId: plan.id,
+        planName: plan.name
+      }))
+    );
+  }
+  return plannedPeriods;
 };

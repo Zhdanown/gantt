@@ -6,7 +6,9 @@ export const periods = [
       name: "Kursk"
     },
     farmId: "bun",
-    culture: { id: "whteafalsdfj", name: "wheat" },
+    farmName: "Бунино",
+    culture: { id: "whteafalsdfj", name: "пшеница" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "21.08.19" },
       { date: "22.08.19" },
@@ -19,7 +21,9 @@ export const periods = [
     id: 2,
     cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
     farmId: "bun",
-    culture: { id: "ruyo34sldkj", name: "ruy" },
+    farmName: "Бунино",
+    culture: { id: "ruyo34sldkj", name: "рожь" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "26.08.19" },
       { date: "27.08.19" },
@@ -31,7 +35,9 @@ export const periods = [
     id: 3,
     cluster: { id: "tulsdlfasldjf", name: "Tula" },
     farmId: "bun",
-    culture: { id: "soyadflajdsfla", name: "soy" },
+    farmName: "Бунино",
+    culture: { id: "soyadflajdsfla", name: "соя" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "24.08.19" },
       { date: "25.08.19" },
@@ -43,7 +49,9 @@ export const periods = [
     id: 4,
     cluster: { id: "tulsdlfasldjf", name: "Tula" },
     farmId: "bun",
-    culture: { id: "soyadflajdsfla", name: "soy" },
+    farmName: "Бунино",
+    culture: { id: "soyadflajdsfla", name: "соя" },
+    agrooperation: { id: "diskldfj-dfkd-dkdk", name: "Дискование" },
     dates: [
       { date: "01.09.19" },
       { date: "02.09.19" },
@@ -55,7 +63,9 @@ export const periods = [
     id: 5,
     cluster: { id: "tulsdlfasldjf", name: "Tula" },
     farmId: "bun",
-    culture: { id: "whteafalsdfj", name: "wheat" },
+    farmName: "Бунино",
+    culture: { id: "whteafalsdfj", name: "пшеница" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "21.08.19" },
       { date: "22.08.19" },
@@ -68,24 +78,42 @@ export const periods = [
     id: 6,
     cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
     farmId: "bun",
-    culture: { id: "ruyo34sldkj", name: "ruy" },
+    farmName: "Бунино",
+    culture: { id: "ruyo34sldkj", name: "рожь" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
-      { date: "26.08.19" },
-      { date: "27.08.19" },
-      { date: "28.08.19" },
-      { date: "29.08.19" }
+      { date: "31.08.19" },
+      { date: "01.09.19" },
+      { date: "02.09.19" },
+      { date: "03.09.19" }
     ]
   },
   {
     id: 7,
     cluster: { id: "tamboflasjdfla", name: "Tambov" },
     farmId: "bun",
-    culture: { id: "soyadflajdsfla", name: "soy" },
+    farmName: "Бунино",
+    culture: { id: "soyadflajdsfla", name: "соя" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "24.08.19" },
       { date: "25.08.19" },
       { date: "26.08.19" },
       { date: "27.08.19" }
+    ]
+  },
+  {
+    id: 8,
+    cluster: { id: "tamboflasjdfla", name: "Tambov" },
+    farmId: "sol",
+    farmName: "Бунино",
+    culture: { id: "soyadflajdsfla", name: "пшеница" },
+    agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
+    dates: [
+      { date: "14.09.19" },
+      { date: "15.09.19" },
+      { date: "16.09.19" },
+      { date: "17.09.19" }
     ]
   }
 ];
