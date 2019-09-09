@@ -7,7 +7,6 @@ import CreatePeriodForm from "./CreatePeriodForm";
 
 // import PeriodForm from "./PeriodForm";
 
-// import { plans } from "../plans";
 import {
   getDateRange,
   dateToString,
@@ -17,11 +16,11 @@ import {
   processPeriods,
   processPlans
 } from "../helpers";
-import { fetchPlans } from "../actions/plans";
-import { fetchPeriods } from "../actions/periods";
-
-// import { periods } from "../data";
-// import { periods as periods2 } from "../data2";
+import { fetchPlannedPeriods, fetchPlans } from "../actions/plans";
+import { fetchAgroPeriods } from "../actions/periods";
+import { fetchVehicles, fetchWorkEquipment } from "../actions/machinery";
+import { fetchMatrix } from "../actions/matrix";
+import { periods } from "../data/data";
 
 const CELL_HEIGHT = 25;
 const CELL_WIDTH = 40;
@@ -43,69 +42,42 @@ class Diagramm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchPeriods();
+    this.props.fetchVehicles();
+    this.props.fetchWorkEquipment();
+    this.props.fetchAgroPeriods();
+    this.props.fetchPlannedPeriods();
     this.props.fetchPlans();
-    const { plans, periods } = this.props;
+    this.props.fetchMatrix();
+    const { plannedPeriods, agroPeriods } = this.props;
 
     // get initial date range
-    const dateRange = getDateRange([
-      ...periods,
-      ...plans.flatMap(x => x.periods)
-    ]);
+    const dateRange = getDateRange([...agroPeriods, ...plannedPeriods]);
     // sort periods and convert date strings to objects
-    const processedPeriods = processPeriods(periods, dateRange);
-    const plannedPeriods = processPlans(plans);
+    const processedAgroPeriods = processPeriods(agroPeriods, dateRange);
+    const processedPlannedPeriods = processPeriods(plannedPeriods, dateRange);
 
     // this.setState({ dateRange: dateRange, periods: processedPeriods });
-    updateChart = this.initChart(dateRange, processedPeriods, plannedPeriods);
-
-    document.addEventListener("keydown", e => {
-      // if (e.code === "KeyD") {
-      //   plans[0].periods.pop();
-      // }
-      // if (e.code === "KeyR") {
-      //   periods2.pop();
-      // }
-      // if (e.code === "KeyA") {
-      //   plans[0].periods.push({
-      //     id: "per-3",
-      //     cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-      //     farmId: "bun",
-      //     culture: { id: "ruyo34sldkj", name: "ruy" },
-      //     dates: [
-      //       { date: "16.08.19" },
-      //       { date: "17.08.19" },
-      //       { date: "18.08.19" },
-      //       { date: "19.08.19" }
-      //     ]
-      //   });
-      // }
-      // const dateRange = getDateRange([
-      //   ...periods2,
-      //   ...plans.flatMap(x => x.periods)
-      // ]);
-      // const processedPeriods = processPeriods(periods2);
-      // const plannedPeriods = processPlans(plans);
-      // updateChart(dateRange, processedPeriods, plannedPeriods);
-    });
+    updateChart = this.initChart(
+      dateRange,
+      processedAgroPeriods,
+      processedPlannedPeriods
+    );
   }
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.periods === this.props.periods &&
-      prevProps.plans === this.props.plans
+      prevProps.agroPeriods === this.props.agroPeriods &&
+      prevProps.plannedPeriods === this.props.plannedPeriods
     )
       return;
-    if (updateChart && this.props.periods.length) {
-      const { plans, periods } = this.props;
+    if (updateChart && this.props.agroPeriods.length) {
+      const { plannedPeriods, agroPeriods } = this.props;
 
-      const dateRange = getDateRange([
-        ...periods,
-        ...plans.flatMap(x => x.periods)
-      ]);
-      const processedPeriods = processPeriods(periods, dateRange);
-      const plannedPeriods = processPlans(plans);
-      updateChart(dateRange, processedPeriods, plannedPeriods);
+      const dateRange = getDateRange([...agroPeriods, ...plannedPeriods]);
+
+      const processedAgroPeriods = processPeriods(agroPeriods, dateRange);
+      const processedPlannedPeriods = processPeriods(plannedPeriods, dateRange);
+      updateChart(dateRange, processedAgroPeriods, processedPlannedPeriods);
     }
   }
 
@@ -157,13 +129,11 @@ class Diagramm extends React.Component {
         .attr("class", "legend-row")
         .html(
           d =>
-            d.id +
-            " " +
             d.cluster.name +
             " " +
             d.culture.name +
             " " +
-            d.farmId +
+            d.farm.name +
             " " +
             d.agrooperation.name
         )
@@ -323,54 +293,62 @@ class Diagramm extends React.Component {
         .style("opacity", 1);
       //************ AGRO-PERIODS ***************/
       //************ PLANNED-PERIODS ***************/
-      for (let plan of planned_periods) {
-        var period_plan = grid.selectAll(".period.plan").data(plan, d => d.id);
+      var period_plan = grid
+        .selectAll(".period.plan")
+        .data(planned_periods, d => d.id);
 
-        period_plan
-          .exit()
-          .transition(t)
-          .style("opacity", 0)
-          .remove();
+      period_plan
+        .exit()
+        .transition(t)
+        .style("opacity", 0)
+        .remove();
 
-        // Update old elements present in data
-        period_plan
-          .transition(t)
-          .style(
-            "top",
-            d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
-          )
-          .style("left", d => getLeftDimension(d) + "px");
+      // Update old elements present in data
+      period_plan
+        .transition(t)
+        .style(
+          "top",
+          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+        )
+        .style("left", d => getLeftDimension(d) + "px");
 
-        // enter new period plans
-        var period_plan_enter = period_plan
-          .enter()
-          .append("div")
-          .attr("class", "period plan")
-          .style("transform", "translate(-45px)")
-          .transition(t)
-          .style("transform", "translate(0)")
-          .style(
-            "top",
-            d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
-          )
-          .style("left", d => getLeftDimension(d) + "px");
+      period_plan
+        .selectAll(".cell")
+        .data(d => d.dates)
+        .exit()
+        .transition(t)
+        .style("opacity", 0)
+        .remove();
 
-        // period plan day
-        var period_plan_day = d3
-          .selectAll(".period.plan")
-          .selectAll(".cell")
-          .data(d => d.dates, d => d.date)
-          .enter()
-          .append("div")
-          .attr("class", "cell")
-          .on("click", function(d) {
-            let period = d3.select(this).node().parentNode.__data__;
-            diagramm.openEditPeriodForm(period, d);
-          })
-          .style("opacity", 0)
-          .transition(t)
-          .style("opacity", 1);
-      }
+      // enter new period plans
+      var period_plan_enter = period_plan
+        .enter()
+        .append("div")
+        .attr("class", "period plan")
+        .style("transform", "translate(-45px)")
+        .transition(t)
+        .style("transform", "translate(0)")
+        .style(
+          "top",
+          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+        )
+        .style("left", d => getLeftDimension(d) + "px");
+
+      // period plan day
+      var period_plan_day = d3
+        .selectAll(".period.plan")
+        .selectAll(".cell")
+        .data(d => d.dates, d => d.date)
+        .enter()
+        .append("div")
+        .attr("class", "cell")
+        .on("click", function(d) {
+          let period = d3.select(this).node().parentNode.__data__;
+          diagramm.openEditPeriodForm(period, d);
+        })
+        .style("opacity", 0)
+        .transition(t)
+        .style("opacity", 1);
       //************ PLANNED-PERIODS ***************/
       function getTopDimension(d, periods) {
         // get period offset from top of the grid
@@ -421,12 +399,19 @@ class Diagramm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    plans: state.plans,
-    periods: state.periods
+    plannedPeriods: state.periods.filter(x => x.planId),
+    agroPeriods: state.periods.filter(x => !x.planId)
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchPlans, fetchPeriods }
+  {
+    fetchPlans,
+    fetchPlannedPeriods,
+    fetchAgroPeriods,
+    fetchVehicles,
+    fetchWorkEquipment,
+    fetchMatrix
+  }
 )(Diagramm);

@@ -22,16 +22,15 @@ export const getDateRange = function([...periods]) {
     }
   }
 
+  min.setDate(min.getDate() - 3);
+  max.setDate(max.getDate() + 3);
+
   // create dates range
   const range = createRange(min, max);
   return range;
 };
 
 export const createRange = function(min, max) {
-  //--------------------------
-  min.setDate(min.getDate() /* - 5*/);
-  max.setDate(max.getDate() /* + 5*/);
-  //--------------------------
   let range = [];
   let start = new Date(min);
   while (start.getTime() <= max.getTime()) {

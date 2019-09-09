@@ -1,19 +1,22 @@
-import {
-  FETCH_PLANS,
-  CREATE_PLAN_PERIOD,
-  DELETE_PLAN_PERIOD
-} from "../actions/types";
+import { combineReducers } from "redux";
+import { FETCH_PLANS, CREATE_PLAN, DELETE_PLAN } from "../actions/types";
 import { deletePlanPeriod } from "../actions/plans";
 
-const planReducer = (state = [], action) => {
+const planReducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_PLANS:
-      return [...state, ...action.payload];
+      return {
+        ...state,
+        ...action.payload.reduce((acc, cur) => {
+          acc[cur.id] = { ...cur };
+          return acc;
+        }, {})
+      };
 
-    case CREATE_PLAN_PERIOD:
+    case CREATE_PLAN:
       return createPlannedPeriod(state, action);
 
-    case DELETE_PLAN_PERIOD:
+    case DELETE_PLAN:
       return deletePlannedPeriod(state, action);
 
     default:
@@ -25,13 +28,14 @@ const planReducer = (state = [], action) => {
 export default planReducer;
 
 function createPlannedPeriod(plans, action) {
+  console.log(action);
   return updateItemInArray(plans, action.payload.planId, plan => {
     return { ...plan, periods: [...plan.periods, action.payload] };
   });
 }
 
 function deletePlannedPeriod(plans, action) {
-  return updateItemInArray(plans, action.paylod, plan => {
+  return updateItemInArray(plans, action.payload, plan => {
     return {
       ...plan,
       periods: [...plan.periods.filter(item => item.id !== action.payload)]

@@ -1,7 +1,12 @@
-import { FETCH_PERIODS, CREATE_PERIOD, DELETE_PERIOD } from "./types";
-import { periods } from "../data2";
+import {
+  FETCH_PERIODS,
+  CREATE_PERIOD,
+  EDIT_PERIOD,
+  DELETE_PERIOD
+} from "./types";
+import { periods } from "../data/data2";
 
-export const fetchPeriods = () => {
+export const fetchAgroPeriods = () => {
   return {
     type: FETCH_PERIODS,
     payload: periods
@@ -15,9 +20,16 @@ export const createPeriod = formData => {
   };
 };
 
-// export const deletePeriod = periodId => {
-//   return {
-//     type: DELETE_PERIOD,
-//     payload: periodId
-//   };
-// };
+export const editPeriod = formData => {
+  return {
+    type: EDIT_PERIOD,
+    payload: formData
+  };
+};
+
+export const deletePeriod = periodId => {
+  return {
+    type: DELETE_PERIOD,
+    payload: periodId
+  };
+};

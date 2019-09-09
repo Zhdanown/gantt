@@ -28,15 +28,18 @@ class DatePicker extends Component {
       this.props.date &&
       prevProps.date.getTime() !== this.props.date.getTime()
     ) {
-      this.state.instance.setDate(this.props.date);
-      this.state.instance.setInputValue(this.props.date);
+      this.updateValue();
     } else if (
       (!prevProps.date || !this.props.date) &&
       prevProps.date !== this.props.date
     ) {
-      this.state.instance.setDate(this.props.date);
-      this.state.instance.setInputValue(this.props.date);
+      this.updateValue();
     }
+  }
+
+  updateValue() {
+    this.state.instance.setDate(this.props.date);
+    this.state.instance.setInputValue(this.props.date);
   }
 
   render() {

@@ -5,7 +5,10 @@ export const periods = [
       id: "sfjsdfjdjlsdfjllsdf",
       name: "Kursk"
     },
-    farmId: "bun",
+    farm: {
+      id: "bun",
+      name: "Бунино"
+    },
     culture: { id: "whteafalsdfj", name: "wheat" },
     dates: [
       { date: "21.08.19" },
@@ -18,7 +21,10 @@ export const periods = [
   {
     id: 2,
     cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-    farmId: "bun",
+    farm: {
+      id: "bun",
+      name: "Бунино"
+    },
     culture: { id: "ruyo34sldkj", name: "ruy" },
     dates: [
       { date: "26.08.19" },
@@ -30,7 +36,10 @@ export const periods = [
   {
     id: 3,
     cluster: { id: "tulsdlfasldjf", name: "Tula" },
-    farmId: "bun",
+    farm: {
+      id: "bun",
+      name: "Бунино"
+    },
     culture: { id: "soyadflajdsfla", name: "soy" },
     dates: [
       { date: "24.08.19" },
@@ -42,7 +51,10 @@ export const periods = [
   // {
   //   id: 4,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -54,7 +66,10 @@ export const periods = [
   // {
   //   id: 5,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -67,7 +82,10 @@ export const periods = [
   // {
   //   id: 6,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -79,7 +97,10 @@ export const periods = [
   // {
   //   id: 7,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -91,7 +112,10 @@ export const periods = [
   // {
   //   id: 8,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -104,7 +128,10 @@ export const periods = [
   // {
   //   id: 9,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -117,7 +144,10 @@ export const periods = [
   // {
   //   id: 10,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -129,7 +159,10 @@ export const periods = [
   // {
   //   id: 11,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -141,7 +174,10 @@ export const periods = [
   // {
   //   id: 12,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -153,7 +189,10 @@ export const periods = [
   // {
   //   id: 13,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -166,7 +205,10 @@ export const periods = [
   // {
   //   id: 14,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -178,7 +220,10 @@ export const periods = [
   // {
   //   id: 15,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -190,7 +235,10 @@ export const periods = [
   // {
   //   id: 16,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -202,7 +250,10 @@ export const periods = [
   // {
   //   id: 17,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -215,7 +266,10 @@ export const periods = [
   // {
   //   id: 18,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -227,7 +281,10 @@ export const periods = [
   // {
   //   id: 19,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -239,7 +296,10 @@ export const periods = [
   // {
   //   id: 20,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -251,7 +311,10 @@ export const periods = [
   // {
   //   id: 21,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -264,7 +327,10 @@ export const periods = [
   // {
   //   id: 22,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -276,7 +342,10 @@ export const periods = [
   // {
   //   id: 23,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -288,7 +357,10 @@ export const periods = [
   // {
   //   id: 24,
   //   cluster: { id: "tamboflasjdfla", name: "Tambov" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -300,7 +372,10 @@ export const periods = [
   // {
   //   id: 25,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "whteafalsdfj", name: "wheat" },
   //   dates: [
   //     { date: "21.08.19" },
@@ -313,7 +388,10 @@ export const periods = [
   // {
   //   id: 26,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "ruyo34sldkj", name: "ruy" },
   //   dates: [
   //     { date: "26.08.19" },
@@ -325,7 +403,10 @@ export const periods = [
   // {
   //   id: 27,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "24.08.19" },
@@ -337,7 +418,10 @@ export const periods = [
   // {
   //   id: 28,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -349,7 +433,10 @@ export const periods = [
   // {
   //   id: 29,
   //   cluster: { id: "sfjsdfjdjlsdfjllsdf", name: "Kursk" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },
@@ -361,7 +448,10 @@ export const periods = [
   // {
   //   id: 30,
   //   cluster: { id: "tulsdlfasldjf", name: "Tula" },
-  //   farmId: "bun",
+  //    farm: {
+  //   id: "bun",
+  //   name: "Бунино"
+  // },
   //   culture: { id: "soyadflajdsfla", name: "soy" },
   //   dates: [
   //     { date: "01.09.19" },

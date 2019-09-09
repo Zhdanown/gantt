@@ -44,8 +44,9 @@ class Modal extends React.Component {
         ref={this.modalRef}
         className="modal modal-fixed-footer"
       >
-        <div className="modal-content">{this.props.children[0]}</div>
-        <div className="modal-footer">{this.props.children[1]}</div>
+        {/* <div className="modal-content">{this.props.children[0]}</div>
+        <div className="modal-footer">{this.props.children[1]}</div> */}
+        {this.props.children}
       </div>
     );
   }

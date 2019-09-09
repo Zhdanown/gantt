@@ -3,29 +3,33 @@ import { connect } from "react-redux";
 import Field from "./Field";
 import DatePicker from "./DatePicker";
 import Select from "./Select";
+import Machinery from "./Machinery";
 import { dateToString } from "../helpers";
 
 class PeriodForm extends React.Component {
   state = {
-    agrooperation: this.props.formData.agrooperation,
-    cluster: this.props.formData.cluster,
-    culture: this.props.formData.culture,
-    farmId: this.props.formData.farmId,
-    farmName: this.props.formData.farmName,
-    startDate: this.props.formData.startDate,
+    ...this.props.formData,
+    plan: this.props.plans.find(x => x.id === this.props.formData.planId),
+    // id,
+    // agrooperation,
+    // cluster,
+    // culture,
+    // farm,
+    // machinery,
+    // startDate,
     endDate: null
   };
 
   componentDidUpdate(prevProps) {
     window.M.updateTextFields();
     if (prevProps.formData !== this.props.formData) {
+      const { planId } = this.props.formData;
+      const plan = this.props.plans.find(x => x.id === planId);
       this.setState({
-        agrooperation: this.props.formData.agrooperation,
-        cluster: this.props.formData.cluster,
-        culture: this.props.formData.culture,
-        farmId: this.props.formData.farmId,
-        farmName: this.props.formData.farmName,
-        startDate: this.props.formData.startDate,
+        ...this.props.formData,
+        id: this.props.formData.id || null,
+        machinery: this.props.formData.machinery || [],
+        plan: plan || null,
         endDate: null
       });
     }
@@ -35,134 +39,131 @@ class PeriodForm extends React.Component {
     console.log(value);
   };
 
+  addMachinery = machinery => {
+    this.setState({ machinery: [...this.state.machinery, machinery] });
+  };
+
+  removeMachinery = machinery => {
+    let newMachinery = [...this.state.machinery];
+
+    for (let i = 0; i < newMachinery.length; i++) {
+      let item = newMachinery[i];
+      const { vehicle, workEquipment } = item;
+      if (
+        vehicle.id === machinery.vehicle.id &&
+        workEquipment.id === machinery.workEquipment.id
+      ) {
+        newMachinery.splice(i, 1);
+        break;
+      }
+    }
+
+    this.setState({ machinery: newMachinery });
+  };
+
   render() {
     const {
       cluster,
       culture,
-      farmName,
+      farm,
       agrooperation,
       startDate,
-      endDate
+      endDate,
+      machinery
     } = this.state;
+
     return (
-      <div>
-        <div>
-          <span>
-            {culture.name} - {agrooperation.name}
-          </span>
-          <span className="right">
-            {cluster.name} - {farmName}
-          </span>
-        </div>
-        <form name="period-form">
-          <h6>Задействованная техника (2)</h6>
-          {/* <ul className="collection">
-            <li className="collection-item">Alvin</li>
-            <li className="collection-item">Alvin</li>
-          </ul> */}
-          <div className=" center-align">
-            <button type="button" className="btn">
-              Добавить технику
-            </button>
+      <>
+        <div className="modal-content">
+          <div>
+            <span>
+              {culture.name} - {agrooperation.name}
+            </span>
+            <span className="right">
+              {cluster.name} - {farm.name}
+            </span>
           </div>
-
-          <div className="row">
-            <div className="input-field col s6">
-              <DatePicker
-                name="startPeriodDate"
-                label="Дата начала"
-                date={startDate}
-                onSelect={date => this.setState({ startDate: date })}
-              />
-            </div>
-
-            <div className="input-field col s6">
-              <DatePicker
-                name="endPeriodDate"
-                label="Дата завершения"
-                date={endDate}
-                onSelect={date => this.setState({ endDate: date })}
-              />
-            </div>
-
+          <form name="period-form">
             <Select
-              label="Продолжительность выполнения операции (дн.)"
-              name="periodLongevity"
-              options={[1, 2, 3, 4]}
-              selectedValue={2}
-              onChange={this.onSelectChange}
+              name="newPeriodPlan"
+              label="План"
+              options={this.props.plans}
+              selectedValue={this.state.plan}
+              disabled={this.state.plan}
             />
-          </div>
+
+            <Machinery
+              machinery={machinery}
+              addMachinery={this.addMachinery}
+              removeMachinery={this.removeMachinery}
+            />
+
+            <div className="row">
+              <div className="input-field col s6">
+                <DatePicker
+                  name="startPeriodDate"
+                  label="Дата начала"
+                  date={startDate}
+                  onSelect={date => this.setState({ startDate: date })}
+                />
+              </div>
+
+              <div className="input-field col s6">
+                <DatePicker
+                  name="endPeriodDate"
+                  label="Дата завершения"
+                  date={endDate}
+                  onSelect={date => this.setState({ endDate: date })}
+                />
+              </div>
+
+              <Select
+                name="periodLongevity"
+                label="Продолжительность выполнения операции (дн.)"
+                options={[1, 2, 3, 4]}
+                selectedValue={2}
+                onChange={this.onSelectChange}
+              />
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
           <button
+            className="btn waves-effect waves-light modal-close red lighten-2 left"
             type="button"
+            name="action"
+            form="period-form"
+            onClick={this.props.deletePeriod}
+          >
+            Delete
+            <i className="material-icons right">delete_outline</i>
+          </button>{" "}
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-green btn-flat"
+          >
+            Отмена
+          </a>
+          <button
             className="btn waves-effect waves-light modal-close"
+            type="submit"
+            name="action"
+            form="period-form"
             onClick={() => this.props.onSubmit(this.state)}
           >
-            Save Period
-          </button>
-        </form>
-
-        {/* <h5>
-          {cluster.name} > {farmName} > {culture.name}
-        </h5>
-
-        <div className="row agrooperation">
-          <div className="col s6">
-            <label htmlFor="">Агрооперация</label>
-            <p>{agrooperation.name}</p>
-          </div>
-          <div className="col s6">
-            <label htmlFor="">Сроки</label>
-            <p>{getAgroTerms(dates)}</p>
-          </div>
+            OK
+            <i className="material-icons right">send</i>
+          </button>{" "}
         </div>
-
-        <form id="period-form" onSubmit={onFormSubmit}>
-          <div className="row">
-            <div className="input-field col s6">
-              <input id="vehicle" type="text" className="validate" />
-              <label htmlFor="vehicle">Самоходная техника</label>
-            </div>
-            <div className="input-field col s6">
-              <input id="work-equipment" type="text" className="validate" />
-              <label htmlFor="work-equipment">Сельхозорудие</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s6">
-              <DatePicker
-                name="startPeriodDate"
-                date={startDate}
-                onSelect={date => setStartDate(date)}
-              />
-              <label>Плановая дата начала</label>
-            </div>
-            <div className="input-field col s6">
-              <DatePicker
-                name="endPeriodDate"
-                onSelect={date => setEndDate(date)}
-              />
-              <label>Плановая дата завершения</label>
-            </div>
-          </div>
-        </form> */}
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = (state, { formData }) => {
-  // var agrooperationName = null;
-
-  if (Object.keys(formData).length) {
-    // agrooperationName = formData.agrooperation.name;
-
-    return {
-      data: null
-    };
-  } else {
-    return {};
-  }
+const mapStateToProps = state => {
+  return {
+    plans: Object.values(state.plans)
+  };
 };
 
 export default connect(mapStateToProps)(PeriodForm);

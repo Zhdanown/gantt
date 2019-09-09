@@ -1,9 +1,20 @@
-import { FETCH_PERIODS, CREATE_PERIOD, DELETE_PERIOD } from "../actions/types";
+import {
+  FETCH_PERIODS,
+  CREATE_PERIOD,
+  EDIT_PERIOD,
+  DELETE_PERIOD
+} from "../actions/types";
 
 const periodReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_PERIODS:
       return [...state, ...action.payload];
+
+    case EDIT_PERIOD:
+      return state.map(period => {
+        if (period.id === action.payload.id) return { ...action.payload };
+        return period;
+      });
 
     case CREATE_PERIOD:
       return [...state, action.payload];
