@@ -9,6 +9,7 @@ import CreatePeriodForm from "./CreatePeriodForm";
 
 import {
   getDateRange,
+  createRange,
   dateToString,
   getLeftOffset,
   getTopOffset,
@@ -17,7 +18,7 @@ import {
   processPlans
 } from "../helpers";
 import { fetchPlannedPeriods, fetchPlans } from "../actions/plans";
-import { fetchAgroPeriods } from "../actions/periods";
+import { fetchAgroPeriods, editPeriod } from "../actions/periods";
 import { fetchVehicles, fetchWorkEquipment } from "../actions/machinery";
 import { fetchMatrix } from "../actions/matrix";
 import { periods } from "../data/data";
@@ -123,26 +124,30 @@ class Diagramm extends React.Component {
         .remove();
 
       // ENTER new elements present in new data
-      /*var enter_legend_row = */ legend_row
-        .enter()
+      var enter_legend_row = legend_row.enter();
+
+      enter_legend_row
         .append("div")
         .attr("class", "legend-row")
-        .html(
-          d =>
-            d.cluster.name +
-            " " +
-            d.culture.name +
-            " " +
-            d.farm.name +
-            " " +
-            d.agrooperation.name
-        )
+        // .html(
+        //   d =>
+        //     d.cluster.name +
+        //     " " +
+        //     d.culture.name +
+        //     " " +
+        //     d.farm.name +
+        //     " " +
+        //     d.agrooperation.name
+        // )
+        // .append("span")
         .on("click", d => {
           console.log(d);
         })
         .style("opacity", 0)
         .transition(t)
         .style("opacity", 1);
+
+      enter_legend_row.append("span");
 
       //************ LEGEND_ROW ***************/
 
@@ -321,8 +326,8 @@ class Diagramm extends React.Component {
         .remove();
 
       // enter new period plans
-      var period_plan_enter = period_plan
-        .enter()
+      var period_plan_enter = period_plan.enter();
+      period_plan_enter
         .append("div")
         .attr("class", "period plan")
         .style("transform", "translate(-45px)")
@@ -349,6 +354,84 @@ class Diagramm extends React.Component {
         .style("opacity", 0)
         .transition(t)
         .style("opacity", 1);
+
+      //********* APPEND PERIOD CONTROLS *********/
+      grid
+        .selectAll(".period.plan")
+        .append("span")
+        .attr("class", "ctrl left");
+
+      grid
+        .selectAll(".period.plan")
+        .insert("span", ".cell")
+        .attr("class", "ctrl right");
+
+      var win = d3.select(window);
+
+      grid.selectAll(".period.plan").on("mousedown", function(d) {
+        const period = d3.select(this).node();
+        console.log(d3.mouse(period));
+        d3.event.preventDefault();
+      });
+
+      //********* STRETCH PERIOD *********/
+
+      grid.selectAll(".period.plan .ctrl").on("mousedown", function(d) {
+        const period = d3.select(this).node().parentNode;
+        const length = d.dates.length; // current amount of days in period
+        let delta = 0; // changed value of days (positive | negative)
+        const isLeftCtrl = this.classList.contains("left");
+
+        // append div element with dashed border
+        var resize = d3
+          .select(period)
+          .append("div")
+          .attr("class", "resize")
+          .style("width", () => length * CELL_WIDTH + "px");
+
+        win.on("mousemove", mousemove).on("mouseup", mouseup);
+
+        function mousemove() {
+          // get x coordinate relative to period div
+          const [x, y] = d3.mouse(period);
+          // get changed value of days and show how period will appear
+          if (isLeftCtrl) {
+            delta = Math.round(-x / CELL_WIDTH);
+            if (delta + length <= 0) delta = -length + 1;
+            resize
+              .style("width", () => (length + delta) * CELL_WIDTH + "px")
+              .style("left", () => -delta * CELL_WIDTH + "px");
+          } else {
+            delta = Math.round((x - period.clientWidth) / CELL_WIDTH);
+            if (delta + length <= 0) delta = -length + 1;
+            resize.style("width", () => (length + delta) * CELL_WIDTH + "px");
+          }
+        }
+
+        function mouseup() {
+          d3.select(period)
+            .selectAll(".resize")
+            .remove();
+          win.on("mousemove", null);
+          // get new dates range
+          let end = new Date(d.dates[d.dates.length - 1].date);
+          let start = new Date(d.dates[0].date);
+          if (isLeftCtrl) start.setDate(start.getDate() - delta);
+          else end.setDate(end.getDate() + delta);
+
+          const newRange = createRange(start, end);
+          if (newRange.length < 1) return;
+          let dates = newRange.map(x => ({
+            date: dateToString(x, "dd.mm.yy")
+          }));
+          const stretchedPeriod = {
+            ...d,
+            dates: dates
+          };
+          diagramm.props.editPeriod(stretchedPeriod);
+        }
+      });
+
       //************ PLANNED-PERIODS ***************/
       function getTopDimension(d, periods) {
         // get period offset from top of the grid
@@ -412,6 +495,7 @@ export default connect(
     fetchAgroPeriods,
     fetchVehicles,
     fetchWorkEquipment,
-    fetchMatrix
+    fetchMatrix,
+    editPeriod
   }
 )(Diagramm);
