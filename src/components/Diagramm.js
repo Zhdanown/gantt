@@ -9,13 +9,13 @@ import CreatePeriodForm from "./CreatePeriodForm";
 
 import {
   getDateRange,
-  createRange,
+  getTree,
   dateToString,
   getLeftOffset,
   getTopOffset,
-  getUniqueRows,
+  getRows,
   processPeriods,
-  processPlans
+  filterPeriods
 } from "../helpers";
 import { stretchPeriod, movePeriod } from "../helpers/periodDnD";
 
@@ -107,49 +107,179 @@ class Diagramm extends React.Component {
     var dates = chart.append("div").attr("class", "dates");
     // draw grid
     var grid = chart.append("div").attr("class", "grid");
+    var treeData = [];
 
     const update = (_dates, agro_periods, planned_periods) => {
       var diagramm = this;
-      var t = d3.transition().duration(750);
+      var t = d3.transition().duration(450);
 
+      if (!treeData.length) {
+        treeData = getTree(agro_periods);
+      }
       //************ LEGEND_ROW ***************/
+
       // JOIN new data with old elements.
-      var legend_row = legend
-        .selectAll(".legend-row:not(:first-child)")
-        .data(getUniqueRows(agro_periods), d => d.id);
-      // EXIT old elements not present in new data
-      legend_row
+      let clusters = legend.selectAll(".cluster").data(treeData, d => d.id);
+      // exit
+      clusters.exit().remove();
+
+      var clustersEnter = clusters
+        .enter()
+        .append("div")
+        .attr("class", "cluster");
+
+      clustersEnter
+        .append("div")
+        .attr("class", "legend-row")
+        .html(d => d.name);
+
+      clusters = clustersEnter.merge(clusters);
+
+      clusters
+        .select(".legend-row")
+        .on("click", toggleNode)
+        .style("background", color);
+
+      var farms = clusters.selectAll(".farm").data(d => d.children, d => d.id);
+
+      farms
         .exit()
+        .style("height", GetNodeHeight)
         .style("opacity", 1)
         .transition(t)
+        .style("height", "0px")
         .style("opacity", 0)
         .remove();
 
-      // ENTER new elements present in new data
-      var enter_legend_row = legend_row.enter();
-
-      enter_legend_row
+      var farmsEnter = farms
+        .enter()
         .append("div")
-        .attr("class", "legend-row")
-        // .html(
-        //   d =>
-        //     d.cluster.name +
-        //     " " +
-        //     d.culture.name +
-        //     " " +
-        //     d.farm.name +
-        //     " " +
-        //     d.agrooperation.name
-        // )
-        // .append("span")
-        .on("click", d => {
-          console.log(d);
-        })
+        .attr("class", "farm");
+
+      farmsEnter
+        .style("height", "0px")
         .style("opacity", 0)
         .transition(t)
+        .style("height", GetNodeHeight)
         .style("opacity", 1);
 
-      enter_legend_row.append("span");
+      farmsEnter
+        .append("div")
+        .attr("class", "legend-row")
+        .html(d => d.name);
+
+      farms = farmsEnter.merge(farms);
+
+      farms
+        .select(".legend-row")
+        .on("click", toggleNode)
+        .style("background", color);
+
+      farms.transition(t).style("height", GetNodeHeight);
+
+      var cultures = farms
+        .selectAll(".culture")
+        .data(d => d.children, d => d.id);
+
+      cultures
+        .exit()
+        .style("height", GetNodeHeight)
+        .style("opacity", 1)
+        .transition(t)
+        .style("height", "0px")
+        .style("opacity", 0)
+        .remove();
+
+      var culturesEnter = cultures
+        .enter()
+        .append("div")
+        .attr("class", "culture");
+
+      culturesEnter
+        .style("height", "0px")
+        .style("opacity", 0)
+        .transition(t)
+        .style("height", GetNodeHeight)
+        .style("opacity", 1);
+
+      culturesEnter
+        .append("div")
+        .attr("class", "legend-row")
+        .html(d => d.name);
+
+      cultures = culturesEnter.merge(cultures);
+
+      cultures
+        .select(".legend-row")
+        .on("click", toggleNode)
+        .style("background", color);
+      // .style("opacity", 0)
+      // .transition(t)
+      // .style("opacity", 1);
+
+      cultures.transition(t).style("height", GetNodeHeight);
+
+      var agrooperations = cultures
+        .selectAll(".agrooperation")
+        .data(d => d.children, d => d.id);
+
+      agrooperations
+        .exit()
+        .style("height", GetNodeHeight)
+        .style("opacity", 1)
+        .transition(t)
+        .style("height", "0px")
+        .style("opacity", 0)
+        .remove();
+
+      var agrooperationsEnter = agrooperations
+        .enter()
+        .append("div")
+        .attr("class", "agrooperation");
+
+      agrooperationsEnter
+        .style("height", "0px")
+        .style("opacity", 0)
+        .transition(t)
+        .style("height", GetNodeHeight)
+        .style("opacity", 1);
+
+      agrooperationsEnter
+        .append("div")
+        .attr("class", "legend-row")
+        .html(d => d.name);
+
+      function toggleNode(d) {
+        if (d.children.length) {
+          d._children = d.children;
+          d.children = [];
+        } else {
+          d.children = d._children;
+          d._children = null;
+        }
+        update(_dates, agro_periods, planned_periods);
+      }
+
+      function color(d) {
+        return d._children
+          ? d.children.length
+            ? "none"
+            : "rgba(30, 136, 229, 0.5)"
+          : "none";
+      }
+
+      function GetNodeHeight(d) {
+        let count = 0;
+        countChildren(d);
+
+        function countChildren(node) {
+          node.children.forEach(x => countChildren(x));
+          count++;
+        }
+        let res = count * CELL_HEIGHT + "px";
+        console.log(res);
+        return res;
+      }
 
       //************ LEGEND_ROW ***************/
 
@@ -170,30 +300,12 @@ class Diagramm extends React.Component {
         .style("opacity", 0)
         .transition(t)
         .style("opacity", 1);
-
-      // date.on("click", d => {
-      //   console.log(d);a
-      // });
-      // date
-      //   .exit()
-      //   .style("opacity", 1)
-      //   .transition(t)
-      //   .style("opacity", 0)
-      //   .remove();
-      // date
-      //   .enter()
-      //   .append("div")
-      //   .attr("class", "date cell")
-      //   .html(d => dateToString(d))
-      //   .style("opacity", 0)
-      //   .transition(t)
-      //   .style("opacity", 1);
       //************ DATES ***************/
 
       //************ GRID ***************/
       var grid_row = grid
         .selectAll(".grid-row")
-        .data(getUniqueRows(agro_periods), d => d.id);
+        .data(getRows(agro_periods, treeData), d => d.id);
 
       // transitions cells from rows that are exiting
       grid_row
@@ -241,6 +353,13 @@ class Diagramm extends React.Component {
         .on("click", function(d) {
           let period = { ...d3.select(this).node().parentNode.__data__ };
           period.dates = [];
+          if (
+            !period.cluster.id ||
+            !period.farm.id ||
+            !period.culture.id ||
+            !period.agrooperation.id
+          )
+            return;
           diagramm.openCreatePeriodForm(period, d);
         });
       // .style("opacity", 0)
@@ -253,7 +372,7 @@ class Diagramm extends React.Component {
       //************ AGRO-PERIODS ***************/
       var period_agro = grid
         .selectAll(".period.agro")
-        .data(agro_periods, d => d.id);
+        .data(filterPeriods(agro_periods, treeData), d => d.id);
       period_agro
         .exit()
         .style("opacity", 1)
@@ -266,7 +385,7 @@ class Diagramm extends React.Component {
         .transition(t)
         .style(
           "top",
-          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+          d => getTopDimension(d, getRows(agro_periods, treeData)) + "px"
         )
         .style("left", d => getLeftDimension(d) + "px");
 
@@ -280,7 +399,7 @@ class Diagramm extends React.Component {
         .transition(t)
         .style(
           "top",
-          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+          d => getTopDimension(d, getRows(agro_periods, treeData)) + "px"
         )
         .style("left", d => getLeftDimension(d) + "px");
 
@@ -292,8 +411,9 @@ class Diagramm extends React.Component {
         .append("div")
         .attr("class", "cell")
         .on("click", function(d) {
-          // let period = d3.select(this).node().parentNode.__data__;
+          let period = d3.select(this).node().parentNode.__data__;
           // diagramm.openEditPeriodForm(period, d);
+          diagramm.openCreatePeriodForm(period, d);
         })
         .style("opacity", 0)
         .transition(t)
@@ -302,7 +422,7 @@ class Diagramm extends React.Component {
       //************ PLANNED-PERIODS ***************/
       var period_plan = grid
         .selectAll(".period.plan")
-        .data(planned_periods, d => d.id);
+        .data(filterPeriods(planned_periods, treeData), d => d.id);
 
       period_plan
         .exit()
@@ -315,7 +435,7 @@ class Diagramm extends React.Component {
         .transition(t)
         .style(
           "top",
-          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+          d => getTopDimension(d, getRows(agro_periods, treeData)) + "px"
         )
         .style("left", d => getLeftDimension(d) + "px");
 
@@ -337,7 +457,7 @@ class Diagramm extends React.Component {
         .style("transform", "translate(0)")
         .style(
           "top",
-          d => getTopDimension(d, getUniqueRows(agro_periods)) + "px"
+          d => getTopDimension(d, getRows(agro_periods, treeData)) + "px"
         )
         .style("left", d => getLeftDimension(d) + "px");
 
