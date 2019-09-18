@@ -9,11 +9,10 @@ import { createRange, dateToString } from "../helpers";
 function EditPeriodForm(props) {
   const onPeriodSubmit = formValues => {
     // get new dates
-    const range = createRange(formValues.startDate, formValues.endDate);
-    let dates = range.map(x => ({ date: dateToString(x, "dd.mm.yy") }));
-    const { startDate, endDate, ...restValues } = formValues;
-
-    props.editPeriod({ ...restValues, dates });
+    // const range = createRange(formValues.startDate, formValues.endDate);
+    // let dates = range.map(x => ({ date: dateToString(x, "dd.mm.yy") }));
+    // const { startDate, endDate, ...restValues } = formValues;
+    props.editPeriod(formValues);
   };
 
   const deletePeriod = () => {

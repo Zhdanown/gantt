@@ -3,6 +3,7 @@ import store from "../store";
 import { editPeriod } from "../actions/periods";
 
 import { createRange, dateToString } from "../helpers";
+import { getNewDates } from "../helpers/periods";
 import { CELL_WIDTH } from "../constants";
 
 var win = d3.select(window);
@@ -53,11 +54,9 @@ export function stretchPeriod(d) {
     if (isLeftCtrl) start.setDate(start.getDate() - delta);
     else end.setDate(end.getDate() + delta);
 
-    const newRange = createRange(start, end);
-    if (newRange.length < 1) return;
-    let dates = newRange.map(x => ({
-      date: dateToString(x, "dd.mm.yy")
-    }));
+    const dates = getNewDates({ ...d, startDate: start, endDate: end });
+    if (dates.length < 1) return;
+
     const stretchedPeriod = {
       ...d,
       dates: dates
@@ -95,10 +94,14 @@ export function movePeriod(d) {
     let start = new Date(d.dates[0].date);
     start.setDate(start.getDate() + delta);
     end.setDate(end.getDate() + delta);
-    const newRange = createRange(start, end);
-    let dates = newRange.map(x => ({
-      date: dateToString(x, "dd.mm.yy")
-    }));
+
+    const dates = getNewDates({ ...d, startDate: start, endDate: end });
+
+    // const newRange = createRange(start, end);
+    // let dates = newRange.map(x => ({
+    //   date: dateToString(x, "dd.mm.yy")
+    // }));
+
     const stretchedPeriod = {
       ...d,
       dates: dates

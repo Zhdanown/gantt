@@ -26,11 +26,49 @@ $CELL_WIDTH: 40px;
       min-width: 0;
     }
 
+    // .cluster,
+    // .farm,
+    // .culture,
+    // .agrooperation {
+    //   position: relative;
+    // }
+
+    .farm {
+      margin-left: 10px;
+    }
+    .culture {
+      margin-left: 20px;
+    }
+    .agrooperation {
+      margin-left: 30px;
+      text-align: right;
+    }
+
     .legend-row {
       height: $CELL_HEIGHT;
       border-bottom: 1px solid lightgray;
-      text-align: right;
+      // text-align: right;
       padding: 0 10px;
+      font-size: 12px;
+      // position: relative;
+
+      // span {
+      //   position: absolute;
+      //   margin-left: 10px;
+      // }
+
+      // .cluster {
+      //   left: 0;
+      // }
+      // .farm {
+      //   left: 40px;
+      // }
+      // .culture {
+      //   left: 80px;
+      // }
+      // .agrooperation {
+      //   left: 120px;
+      // }
 
       // &:first-child {
       //   position: sticky;
@@ -97,6 +135,15 @@ $CELL_WIDTH: 40px;
         &.plan {
           .cell {
             background: rgba(30, 136, 229, 0.5);
+            font-weight: bold;
+          }
+
+          &.complete {
+            .cell {
+              background: rgba(30, 136, 229, 0.3);
+              font-weight: normal;
+              color: #ffffff;
+            }
           }
 
           .ctrl {

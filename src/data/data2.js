@@ -9,7 +9,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "whteafalsdfj", name: "пшеница" },
+    culture: { id: "whteafalsdfj", name: "пшеница", area: 760 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "21.08.19" },
@@ -26,7 +26,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "ruyo34sldkj", name: "рожь" },
+    culture: { id: "ruyo34sldkj", name: "рожь", area: 760 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "26.08.19" },
@@ -42,7 +42,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "soyadflajdsfla", name: "соя" },
+    culture: { id: "soyadflajdsfla", name: "соя", area: 1024 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "24.08.19" },
@@ -58,7 +58,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "soyadflajdsfla", name: "соя" },
+    culture: { id: "soyadflajdsfla", name: "соя", area: 512 },
     agrooperation: { id: "diskldfj-dfkd-dkdk", name: "Дискование" },
     dates: [
       { date: "01.09.19" },
@@ -74,7 +74,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "whteafalsdfj", name: "пшеница" },
+    culture: { id: "whteafalsdfj", name: "пшеница", area: 825 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "21.08.19" },
@@ -91,7 +91,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "ruyo34sldkj", name: "рожь" },
+    culture: { id: "ruyo34sldkj", name: "рожь", area: 790 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "31.08.19" },
@@ -107,7 +107,7 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "soyadflajdsfla", name: "соя" },
+    culture: { id: "soyadflajdsfla", name: "соя", area: 740 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
       { date: "24.08.19" },
@@ -123,13 +123,13 @@ export const periods = [
       id: "bun",
       name: "Бунино"
     },
-    culture: { id: "soyadflajdsfla", name: "пшеница" },
+    culture: { id: "soyadflajdsfla", name: "пшеница", area: 350 },
     agrooperation: { id: "bulkdfld-dfkd-dkdk", name: "Культивация" },
     dates: [
-      { date: "14.09.19" },
-      { date: "15.09.19" },
-      { date: "16.09.19" },
-      { date: "17.09.19" }
+      { date: "04.09.19" },
+      { date: "05.09.19" },
+      { date: "06.09.19" },
+      { date: "07.09.19" }
     ]
   }
 ];

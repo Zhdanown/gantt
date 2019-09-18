@@ -1,243 +1,78 @@
 export const matrix = [
   {
     vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
+      id: "dkjfls-fdk234-dkdksl-kdkd1",
+      name: "Трактор колесный Case IH Magnum 340"
     },
-    aggregate: {
-      id: "asdsad-asdl-025-am",
-      name: "Сеялка Amazon"
+    workEquipment: {
+      id: "dkdj-sdfkjdlsfsd-k33d783jd",
+      name: "Борона пружинная сетчатая Hatzenbicher Striegel 24"
     },
     operation: {
-      id: "7ydfuydf-dfihdf-dkljf",
-      name: "Сев"
+      id: "diskldfj-dfkd-dkdk",
+      name: "Дискование"
     },
     culture: {
-      id: "23dfdsf-sdfsdf-sdf23wheat",
-      name: "Пшеница"
+      id: "soyadflajdsfla",
+      name: "соя"
     },
-    productivity: 24
+    productivity: 56
   },
   {
     vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
+      id: "dkjfls-fdk234-dkdksl-kdkd1",
+      name: "Трактор колесный Case IH Magnum 340"
     },
-    aggregate: {
-      id: "asdsad-asdl-025-am",
-      name: "Сеялка Amazon"
+    workEquipment: {
+      id: "abfce165-e024-11e8-80de-00155d383f21",
+      name: "Культиватор комбинированный с дисками Wil-Rich DC III 11,3"
     },
     operation: {
-      id: "7ydfuydf-dfihdf-dkljf",
-      name: "Сев"
+      id: "diskldfj-dfkd-dkdk",
+      name: "Дискование"
     },
     culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
+      id: "soyadflajdsfla",
+      name: "соя"
     },
-    productivity: 14
+    productivity: 68
   },
   {
     vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
+      id: "dkjfls-fdk234-dkdksl-kdkd2",
+      name: "Трактор колесный John Deere 8320R"
     },
-    aggregate: {
-      id: "asdsad-asdl-025-bb",
-      name: "Борона 'Богатырь'"
+    workEquipment: {
+      id: "dkfj0342_k3ekdkd",
+      name: "Борона дисковая тяжелая Wishek 842NT"
     },
     operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
+      id: "diskldfj-dfkd-dkdk",
+      name: "Дискование"
     },
     culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
+      id: "soyadflajdsfla",
+      name: "соя"
     },
-    productivity: 14
+    productivity: 72
   },
   {
     vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
+      id: "dkjfls-fdk234-dkdksl-kdkd1",
+      name: "Трактор колесный Case IH Magnum 340"
     },
-    aggregate: {
-      id: "asdsad-asdl-025-bb",
-      name: "Борона 'Богатырь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 42
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-dd3s",
-      name: "Борона 'DeepDeeger 3s'"
+    workEquipment: {
+      id: "dkfj0342_k3ekdkd",
+      name: "Борона дисковая тяжелая Wishek 842NT"
     },
     operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
+      id: "diskldfj-dfkd-dkdk",
+      name: "Дискование"
     },
     culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
+      id: "soyadflajdsfla",
+      name: "соя"
     },
-    productivity: 54
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-nh5000",
-      name: "New Holland 5000"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-am",
-      name: "Сеялка Amazon"
-    },
-    operation: {
-      id: "7ydfuydf-dfihdf-dkljf",
-      name: "Сев"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 24
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-nh5500",
-      name: "New Holland 5500"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-bb",
-      name: "Борона 'Богатырь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "23dfdsf-sdfsdf-sdf23wheat",
-      name: "Пшеница"
-    },
-    productivity: 30
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-nh5900",
-      name: "New Holland 5900"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-bb",
-      name: "Борона 'Богатырь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 30
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-nh5900",
-      name: "New Holland 5900"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-vit",
-      name: "Борона 'Витязь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 40
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-nh5900",
-      name: "New Holland 5900"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-vit",
-      name: "Борона 'Витязь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-mu",
-      name: "Внесение МУ"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 60
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-jd650",
-      name: "John Deere 650"
-    },
-    aggregate: {
-      id: "asdsad-asdl-025-vit",
-      name: "Борона 'Витязь'"
-    },
-    operation: {
-      id: "45sd45-4584asd-456-a65-mu",
-      name: "Внесение МУ"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 60
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-c2300i",
-      name: "Claas 2300i"
-    },
-    aggregate: null,
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 24
-  },
-  {
-    vehicle: {
-      id: "sdaasd-aklkjklsdf-c2300",
-      name: "Claas 2300"
-    },
-    aggregate: null,
-    operation: {
-      id: "45sd45-4584asd-456-a65-boron",
-      name: "Боронование"
-    },
-    culture: {
-      id: "45sd45-4584asd-456-a65-soybean",
-      name: "Соя"
-    },
-    productivity: 28
+    productivity: 80
   }
 ];

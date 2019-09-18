@@ -18,6 +18,7 @@ import {
   filterPeriods
 } from "../helpers";
 import { stretchPeriod, movePeriod } from "../helpers/periodDnD";
+import { isComplete } from "../helpers/periods";
 
 import { fetchPlannedPeriods, fetchPlans } from "../actions/plans";
 import { fetchAgroPeriods, editPeriod } from "../actions/periods";
@@ -87,14 +88,16 @@ class Diagramm extends React.Component {
   openEditPeriodForm = (period, date) => {
     this.setState({
       currentData: { ...period, startDate: period.dates[0].date },
-      isEditPeriodFormOpen: true
+      isEditPeriodFormOpen: true,
+      isCreatePeriodFormOpen: false
     });
   };
 
   openCreatePeriodForm = (period, date) => {
     this.setState({
       currentData: { ...period, startDate: date },
-      isCreatePeriodFormOpen: true
+      isCreatePeriodFormOpen: true,
+      isEditPeriodFormOpen: false
     });
   };
 
@@ -277,7 +280,7 @@ class Diagramm extends React.Component {
           count++;
         }
         let res = count * CELL_HEIGHT + "px";
-        console.log(res);
+
         return res;
       }
 
@@ -413,7 +416,7 @@ class Diagramm extends React.Component {
         .on("click", function(d) {
           let period = d3.select(this).node().parentNode.__data__;
           // diagramm.openEditPeriodForm(period, d);
-          diagramm.openCreatePeriodForm(period, d);
+          diagramm.openCreatePeriodForm(period, d.date);
         })
         .style("opacity", 0)
         .transition(t)
@@ -432,6 +435,9 @@ class Diagramm extends React.Component {
 
       // Update old elements present in data
       period_plan
+        .attr("class", d =>
+          isComplete(d) ? "period plan complete" : "period plan"
+        )
         .transition(t)
         .style(
           "top",
@@ -451,7 +457,9 @@ class Diagramm extends React.Component {
       var period_plan_enter = period_plan.enter();
       period_plan_enter
         .append("div")
-        .attr("class", "period plan")
+        .attr("class", d =>
+          isComplete(d) ? "period plan complete" : "period plan"
+        )
         .style("transform", "translate(-45px)")
         .transition(t)
         .style("transform", "translate(0)")
@@ -465,10 +473,15 @@ class Diagramm extends React.Component {
       var period_plan_day = d3
         .selectAll(".period.plan")
         .selectAll(".cell")
-        .data(d => d.dates, d => d.date)
+        .data(d => d.dates, d => d.date + d.prod);
+
+      period_plan_day.html(d => d.prod);
+
+      period_plan_day
         .enter()
         .append("div")
         .attr("class", "cell")
+        .html(d => d.prod)
         .on("click", function(d) {
           let period = d3.select(this).node().parentNode.__data__;
           diagramm.openEditPeriodForm(period, d);

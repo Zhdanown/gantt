@@ -2,7 +2,8 @@ import {
   FETCH_PERIODS,
   CREATE_PERIOD,
   EDIT_PERIOD,
-  DELETE_PERIOD
+  DELETE_PERIOD,
+  SET_SELECTED_PERIOD
 } from "./types";
 import { periods } from "../data/data2";
 
@@ -31,5 +32,12 @@ export const deletePeriod = periodId => {
   return {
     type: DELETE_PERIOD,
     payload: periodId
+  };
+};
+
+export const setSelectedPeriod = period => {
+  return {
+    type: SET_SELECTED_PERIOD,
+    payload: period
   };
 };

@@ -85,7 +85,7 @@ export const getTopOffset = function(period, periods) {
   for (const [index, p] of periods.entries()) {
     if (
       p.cluster.id === period.cluster.id &&
-      p.farmId === period.farmId &&
+      p.farm.id === period.farm.id &&
       p.culture.id === period.culture.id &&
       p.agrooperation.id === period.agrooperation.id
     ) {
@@ -122,15 +122,84 @@ function convertPeriod(period, dateRange) {
   };
 }
 
-export const getUniqueRows = function(periods) {
-  const uniquePeriods = periods.filter(function(a) {
-    let key = a.cluster.id + a.farmId + a.culture.id + a.agrooperation.id;
-    if (!this[key]) {
-      this[key] = true;
-      return true;
-    }
-  }, {});
-  return uniquePeriods;
+// export const getUniqueRows = function(periods) {
+//   const uniquePeriods = periods.filter(function(a) {
+//     let key = a.cluster.id + a.farmId + a.culture.id + a.agrooperation.id;
+//     if (!this[key]) {
+//       this[key] = true;
+//       return true;
+//     }
+//   }, {});
+//   return uniquePeriods;
+// };
+
+export const filterPeriods = function(periods, tree) {
+  const filteredPeriods = periods.filter(period => {
+    const cluster = tree.find(x => x.id === period.cluster.id);
+    if (!cluster.children.length) return false;
+    const farm = cluster.children.find(x => x.id === period.farm.id);
+    if (!farm.children.length) return false;
+    const culture = farm.children.find(x => x.id === period.culture.id);
+    if (!culture.children.length) return false;
+    return true;
+  });
+  return filteredPeriods;
+};
+
+export const getRows = function(periods, tree) {
+  const { dateRange } = periods[0] || [];
+  const row = {
+    dateRange,
+    cluster: {},
+    farm: {},
+    culture: {},
+    agrooperation: {}
+  };
+
+  let rows = [];
+  tree.forEach(cluster => {
+    rows.push({
+      ...row,
+      cluster
+    });
+    cluster.children.forEach(farm => {
+      rows.push({
+        ...row,
+        cluster,
+        farm
+      });
+      farm.children.forEach(culture => {
+        rows.push({
+          ...row,
+          cluster,
+          farm,
+          culture
+        });
+        culture.children.forEach(agrooperation => {
+          let found = periods.find(
+            x =>
+              x.cluster.id === cluster.id &&
+              x.farm.id === farm.id &&
+              x.culture.id === culture.id &&
+              x.agrooperation.id === agrooperation.id
+          );
+          if (found) rows.push(found);
+        });
+      });
+    });
+  });
+
+  // tree.forEach(cluster => {
+  //   traverseNode(cluster, cluster.children);
+  // });
+
+  // function traverseNode(node, children) {
+  //   const { id, name } = node;
+  //   rows.push({ id, name });
+  //   children.forEach(child => traverseNode(child, child.children));
+  // }
+
+  return rows;
 };
 
 export const processPeriods = function(periods, dateRange) {
@@ -155,4 +224,36 @@ export const processPlans = function(plans) {
     );
   }
   return plannedPeriods;
+};
+
+export const getTree = function(data) {
+  const copy = [...data];
+  let tree = [];
+  copy.forEach(item => {
+    let cluster = handleNode(item.cluster, tree, item);
+    let farm = handleNode(item.farm, cluster.children, item);
+    let culture = handleNode(item.culture, farm.children, item);
+    handleNode(item.agrooperation, culture.children, item);
+  });
+
+  function handleNode(node, arr, item) {
+    let foundNode = arr.find(item => item.id === node.id);
+    if (!foundNode) {
+      foundNode = { ...node, children: [], node: item };
+      arr.push(foundNode);
+    }
+    return foundNode;
+  }
+
+  // copy.forEach(cluster => {
+  //   let found = tree.find(x => x.id === cluster.id);
+  //   if (!found) {
+  //     found = { ...cluster, children: [], cluster }
+  //     tree.push(found);
+  //   } else {
+
+  //   }
+  // });
+
+  return tree;
 };

@@ -5,7 +5,7 @@ import {
   DELETE_PERIOD
 } from "../actions/types";
 
-const periodReducer = (state = [], action) => {
+const periodsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_PERIODS:
       return [...state, ...action.payload];
@@ -27,4 +27,4 @@ const periodReducer = (state = [], action) => {
   }
 };
 
-export default periodReducer;
+export default periodsReducer;
